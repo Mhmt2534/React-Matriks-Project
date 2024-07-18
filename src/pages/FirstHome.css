@@ -1,0 +1,20 @@
+h1 {
+  font-weight: 600;
+  font-size: 100px;
+  margin-bottom: 20px;
+}
+
+.cont {
+  position: relative;
+  top: 50px;
+}
+
+.loginbtn {
+  font-weight: 700;
+  padding: 20px 31px 20px 31px;
+}
+
+.signbtn {
+  font-weight: 700;
+  padding: 20px 20px 20px 20px;
+}
