@@ -1,8 +1,9 @@
-import React from "react";
+import React, { useContext } from "react";
 import "./Sign.css";
 import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
+import { AuthContext } from "../context/AuthContext";
 
 interface ILogin {
   onLogin: (data: any) => void;
@@ -10,6 +11,8 @@ interface ILogin {
 
 const Login: React.FC = () => {
   const navigate = useNavigate();
+
+  const authContext = useContext(AuthContext);
 
   const {
     register,
@@ -26,6 +29,10 @@ const Login: React.FC = () => {
       if (userData) {
         // getItem can return actual value or null
         if (userData.password === data.password) {
+          authContext?.setIsLogin(true);
+          authContext?.setUserName(userData.name);
+          console.log(authContext?.userName);
+
           toast.success(`${userData.name}  You Are Successfully Logged In`);
           console.log(`${userData.name}  You Are Successfully Logged In`);
           navigate("/home");

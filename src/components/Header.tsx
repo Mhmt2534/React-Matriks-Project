@@ -1,8 +1,16 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Container, Nav, Navbar, NavDropdown } from "react-bootstrap";
 import SignOut from "./SignOut";
 
-const Header = () => {
+import SignIn from "./SignIn";
+import { AuthContext } from "../context/AuthContext";
+import Login from "../pages/Login";
+
+const Header: React.FC = () => {
+  const context = useContext(AuthContext);
+
+  console.log(context?.isLogin);
+
   return (
     <>
       <Navbar
@@ -13,12 +21,17 @@ const Header = () => {
         data-bs-theme="dark"
       >
         <Container>
-          <Navbar.Brand href="#home">React-Bootstrap</Navbar.Brand>
+          <Navbar.Brand href="#home">Matriks</Navbar.Brand>
           <Navbar.Toggle aria-controls="responsive-navbar-nav" />
           <Navbar.Collapse id="responsive-navbar-nav">
             <Nav className="me-auto">
-              <Nav.Link href="#features">Features</Nav.Link>
-              <Nav.Link href="#pricing">Pricing</Nav.Link>
+              <Nav.Link href="/home/favorites">Favorites</Nav.Link>
+              <Nav.Link
+                href="#pricing"
+                onClick={() => context?.setIsLogin(false)}
+              >
+                Pricing
+              </Nav.Link>
               <NavDropdown title="Dropdown" id="collapsible-nav-dropdown">
                 <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>
                 <NavDropdown.Item href="#action/3.2">
@@ -33,7 +46,7 @@ const Header = () => {
                 </NavDropdown.Item>
               </NavDropdown>
             </Nav>
-            <SignOut />
+            {context?.isLogin ? <SignIn /> : <SignOut />}
           </Navbar.Collapse>
         </Container>
       </Navbar>
