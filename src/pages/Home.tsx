@@ -7,6 +7,7 @@ import { useNavigate } from "react-router-dom";
 
 const Home = () => {
   const [coins, setCoins] = useState<Coin[]>([]);
+  const [favoritesCoin, setFavoritesCoin] = useState<Coin[]>([]);
 
   const navigate = useNavigate();
 
@@ -28,7 +29,29 @@ const Home = () => {
     fetchData();
   }, []);
 
+  useEffect(() => {
+    const savedFavorites: any = localStorage.getItem("favorites");
+    if (savedFavorites) {
+      setFavoritesCoin(JSON.parse(savedFavorites));
+    }
+    console.log(savedFavorites);
+  }, []);
+
   const authContext = useContext(AuthContext);
+
+  useEffect(() => {
+    localStorage.setItem("favorites", JSON.stringify(favoritesCoin));
+  }, [favoritesCoin]);
+
+  const handleFavorite = (item: any) => {
+    if (favoritesCoin.some((fav) => fav.symbol === item.symbol)) {
+      setFavoritesCoin(
+        favoritesCoin.filter((fav) => fav.symbol !== item.symbol)
+      );
+    } else {
+      setFavoritesCoin([...favoritesCoin, item]);
+    }
+  };
 
   return (
     <div>
@@ -44,12 +67,7 @@ const Home = () => {
           </thead>
           <tbody>
             {coins.map((coin) => (
-              <tr
-                key={coin.symbol}
-                onClick={() => {
-                  console.log(coin.symbol);
-                }}
-              >
+              <tr key={coin.symbol} onClick={() => {}}>
                 <td>{coin.symbol}</td>
                 <td>{coin.volume}</td>
                 <td>
@@ -65,11 +83,11 @@ const Home = () => {
                 <td>
                   <Button
                     variant="success"
-                    onClick={() =>
-                      navigate(`/home/cryptodetail/${coin.symbol}`)
-                    }
+                    onClick={() => handleFavorite(coin)}
                   >
-                    Add to favorites
+                    {favoritesCoin.some((fav) => fav.symbol === coin.symbol)
+                      ? "Remove from Favorites"
+                      : "Add to Favorites"}
                   </Button>
                 </td>
               </tr>

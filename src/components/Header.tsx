@@ -1,15 +1,15 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Container, Nav, Navbar, NavDropdown } from "react-bootstrap";
 import SignOut from "./SignOut";
-
+import { toast } from "react-toastify";
 import SignIn from "./SignIn";
 import { AuthContext } from "../context/AuthContext";
 import Login from "../pages/Login";
+import { Link, useNavigate } from "react-router-dom";
 
 const Header: React.FC = () => {
   const context = useContext(AuthContext);
-
-  console.log(context?.isLogin);
+  const navigate = useNavigate();
 
   return (
     <>
@@ -25,26 +25,29 @@ const Header: React.FC = () => {
           <Navbar.Toggle aria-controls="responsive-navbar-nav" />
           <Navbar.Collapse id="responsive-navbar-nav">
             <Nav className="me-auto">
-              <Nav.Link href="/home/favorites">Favorites</Nav.Link>
               <Nav.Link
-                href="#pricing"
-                onClick={() => context?.setIsLogin(false)}
+                onClick={() => {
+                  navigate("/home");
+                }}
               >
-                Pricing
+                Home
               </Nav.Link>
-              <NavDropdown title="Dropdown" id="collapsible-nav-dropdown">
-                <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>
-                <NavDropdown.Item href="#action/3.2">
-                  Another action
-                </NavDropdown.Item>
-                <NavDropdown.Item href="#action/3.3">
-                  Something
-                </NavDropdown.Item>
-                <NavDropdown.Divider />
-                <NavDropdown.Item href="#action/3.4">
-                  Separated link
-                </NavDropdown.Item>
-              </NavDropdown>
+
+              <Nav.Link
+                onClick={() => {
+                  navigate("/home/favorites");
+                }}
+              >
+                Favorites
+              </Nav.Link>
+
+              <Nav.Link
+                onClick={() => {
+                  navigate("/About");
+                }}
+              >
+                About
+              </Nav.Link>
             </Nav>
             {context?.isLogin ? <SignIn /> : <SignOut />}
           </Navbar.Collapse>

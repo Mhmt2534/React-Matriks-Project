@@ -38,14 +38,15 @@ const Login: React.FC = () => {
           navigate("/home");
         } else {
           toast.error("Email or Password is not matching with our record");
-          console.log("Email or Password is not matching with our record");
+          console.log("a");
         }
       } else {
         toast.error("Email or Password is not matching with our record");
-        console.log("Email or Password is not matching with our record");
+        console.log("b");
       }
     } else {
       toast.error("Email or Password is not matching with our record");
+      console.log(`c`);
     }
   };
 

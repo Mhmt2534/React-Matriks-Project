@@ -13,6 +13,7 @@ import { useContext, useState } from "react";
 import { AuthContext, AuthProvider } from "./context/AuthContext";
 import CryptoDetails from "./pages/CryptoDetails";
 import Favorites from "./pages/Favorites";
+import About from "./pages/About";
 
 function App() {
   const context = useContext(AuthContext);
@@ -27,6 +28,7 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<SignUp />} />
           <Route path="/home" element={<Home />} />
+          <Route path="/about" element={<About />} />
           <Route
             path="/home/cryptodetail/:symbol"
             element={<CryptoDetails />}
