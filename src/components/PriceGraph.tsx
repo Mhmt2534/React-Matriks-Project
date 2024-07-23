@@ -1,6 +1,5 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { Tooltip } from "react-bootstrap";
 import {
   Area,
   AreaChart,
@@ -9,6 +8,7 @@ import {
   Line,
   LineChart,
   ResponsiveContainer,
+  Tooltip,
   XAxis,
   YAxis,
 } from "recharts";
@@ -17,6 +17,7 @@ import "./PriceGraph.css";
 const PriceGraph = (symbol: any) => {
   const [coinChar, setCoinChar] = useState([]);
   const [pointer, setPointer] = useState(0);
+  const [inter, setInter] = useState(4);
 
   useEffect(() => {
     console.log(" dsa" + symbol.symbol);
@@ -32,7 +33,7 @@ const PriceGraph = (symbol: any) => {
               price: parseFloat(item[4]),
             }));
             setCoinChar(formattedData);
-            console.log(formattedData);
+            setInter(1);
           });
         break;
       case 1:
@@ -46,7 +47,7 @@ const PriceGraph = (symbol: any) => {
               price: parseFloat(item[4]),
             }));
             setCoinChar(formattedData);
-            console.log(formattedData);
+            setInter(40);
           });
         break;
       case 2:
@@ -60,7 +61,7 @@ const PriceGraph = (symbol: any) => {
               price: parseFloat(item[4]),
             }));
             setCoinChar(formattedData);
-            console.log(formattedData);
+            setInter(5);
           });
         break;
       case 3:
@@ -74,7 +75,7 @@ const PriceGraph = (symbol: any) => {
               price: parseFloat(item[4]),
             }));
             setCoinChar(formattedData);
-            console.log(formattedData);
+            setInter(73);
           });
         break;
       default:
@@ -123,7 +124,7 @@ const PriceGraph = (symbol: any) => {
           }}
         >
           <CartesianGrid strokeDasharray="3 3" />
-          <XAxis dataKey="time" />
+          <XAxis interval={inter} />
           <YAxis />
           <Tooltip />
           <Area

@@ -12,21 +12,27 @@ const Home = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    const fetchData = async () => {
-      await axios
-        .get("https://api.binance.com/api/v3/ticker/24hr")
-        .then((response) => {
-          const sortedData = response.data.sort(
-            (a: Coin, b: Coin) => parseFloat(b.volume) - parseFloat(a.volume)
-          );
+    const fetchTickers = async () => {
+      const response = await axios.get(
+        "https://api.binance.com/api/v3/ticker/24hr"
+      );
+      console.log(response);
 
-          const FiveVolumeData = sortedData.slice(0, 10);
+      const usdtTickers = response.data.filter((ticker: Coin) =>
+        ticker.symbol.endsWith("USDT")
+      );
 
-          setCoins(FiveVolumeData);
-        });
+      const sortedTickers = usdtTickers.sort(
+        (a: Coin, b: Coin) => parseFloat(b.volume) - parseFloat(a.volume)
+      );
+
+      const top10Coins = sortedTickers.slice(0, 10);
+
+      setCoins(top10Coins);
+      console.log(coins);
     };
 
-    fetchData();
+    fetchTickers();
   }, []);
 
   useEffect(() => {

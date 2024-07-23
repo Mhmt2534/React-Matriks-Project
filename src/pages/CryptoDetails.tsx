@@ -5,9 +5,11 @@ import { useParams } from "react-router-dom";
 import { Coin } from "../models/Coin";
 import coinLogo from "../assets/images-Photoroom.png";
 import PriceGraph from "../components/PriceGraph";
+import CoinDetailSelect from "../components/CoinDetailSelect";
 
 const CryptoDetails = () => {
   const [coinDetail, setCoinDetail] = useState<Coin>();
+  const [coinSymbol, setCoinSymbol] = useState<Coin>();
 
   let { symbol } = useParams();
   console.log({ symbol });
@@ -19,6 +21,8 @@ const CryptoDetails = () => {
         setCoinDetail(response.data);
       });
   }, []);
+
+  useEffect(() => {}, [coinSymbol]);
 
   return (
     <div>
@@ -36,7 +40,8 @@ const CryptoDetails = () => {
                   className="me-2"
                   style={{ height: "40px" }}
                 />
-                <h6 className="mb-0">{coinDetail?.symbol}</h6>
+                {/* <h6 className="mb-0">{coinDetail?.symbol}</h6> */}
+                <CoinDetailSelect symbol={coinDetail?.symbol} />
               </div>
               <div className="col-4">
                 <h6 className="mb-0">Last Price: {coinDetail?.lastPrice}</h6>
