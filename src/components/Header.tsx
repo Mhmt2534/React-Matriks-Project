@@ -11,6 +11,7 @@ import { Coin } from "../models/Coin";
 
 const Header: React.FC = () => {
   const [coins, setCoins] = useState<Coin[]>([]);
+  const [isLoginn, setIsLoginn] = useState<boolean>();
 
   const context = useContext(AuthContext);
   const navigate = useNavigate();
@@ -36,6 +37,17 @@ const Header: React.FC = () => {
     };
 
     fetchTickers();
+  }, []);
+
+  useEffect(() => {
+    const savedFavorites: any = localStorage.getItem("isSign");
+    if (savedFavorites) {
+      setIsLoginn(true);
+    } else {
+      setIsLoginn(false);
+    }
+    console.log(savedFavorites);
+    console.log(isLoginn);
   }, []);
 
   return (
@@ -86,7 +98,7 @@ const Header: React.FC = () => {
                 ))}
               </NavDropdown>
             </Nav>
-            {context?.isLogin ? <SignIn /> : <SignOut />}
+            {isLoginn ? <SignIn /> : <SignOut />}
           </Navbar.Collapse>
         </Container>
       </Navbar>

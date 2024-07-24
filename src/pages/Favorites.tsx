@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Coin } from "../models/Coin";
-import { Container, Table } from "react-bootstrap";
+import { Button, Container, Table } from "react-bootstrap";
 
 const Favorites = () => {
   const [favorites, setFavorites] = useState<Coin[]>([]);
@@ -25,6 +25,12 @@ const Favorites = () => {
     }
   }, []);
 
+  const handleRemove = (newFav: Coin) => {
+    const newCoins = favorites.filter((fav) => fav.symbol !== newFav.symbol);
+    setFavorites(newCoins);
+    localStorage.setItem("favorites", JSON.stringify(newCoins));
+  };
+
   return (
     <div>
       {isThere ? (
@@ -33,8 +39,14 @@ const Favorites = () => {
             <tbody>
               {favorites.map((fav: Coin | any) => (
                 <tr>
-                  <td>{fav.symbol}</td>
+                  <th>{fav.symbol}</th>
                   <td>{fav.lastPrice}</td>
+                  <td>
+                    {" "}
+                    <Button variant="success" onClick={() => handleRemove(fav)}>
+                      Remove
+                    </Button>
+                  </td>
                 </tr>
               ))}
             </tbody>

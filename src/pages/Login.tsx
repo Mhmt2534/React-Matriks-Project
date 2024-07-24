@@ -31,11 +31,12 @@ const Login: React.FC = () => {
         if (userData.password === data.password) {
           authContext?.setIsLogin(true);
           authContext?.setUserName(userData.name);
-          console.log(authContext?.userName);
+
+          localStorage.setItem("isSign", JSON.stringify(userData));
 
           toast.success(`${userData.name}  You Are Successfully Logged In`);
           console.log(`${userData.name}  You Are Successfully Logged In`);
-          navigate("/home");
+          window.location.assign("/home");
         } else {
           toast.error("Email or Password is not matching with our record");
           console.log("a");

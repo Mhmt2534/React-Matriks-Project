@@ -8,9 +8,10 @@ const SignIn = () => {
   const navigate = useNavigate();
 
   const handleSignOut = () => {
-    authContext?.setIsLogin(false);
-    authContext?.setUserName("");
-    navigate("/");
+    localStorage.removeItem("isSign");
+    localStorage.removeItem("favorites");
+    // authContext?.setIsLogin(false);
+    // authContext?.setUserName("");
   };
 
   return (
@@ -31,7 +32,7 @@ const SignIn = () => {
           <NavDropdown.Item href="#action/3.2">Another action</NavDropdown.Item>
           <NavDropdown.Item href="#action/3.3">Something</NavDropdown.Item>
           <NavDropdown.Divider />
-          <NavDropdown.Item href="#action/3.4" onClick={handleSignOut}>
+          <NavDropdown.Item href="/" onClick={handleSignOut}>
             Sign Out
           </NavDropdown.Item>
         </NavDropdown>
