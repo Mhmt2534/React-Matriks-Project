@@ -26,8 +26,8 @@ const CryptoDetails = () => {
 
   return (
     <div>
-      <div className="container mt-4">
-        <h4 className="text-white mb-4">
+      <div className="container ">
+        <h4 className="text-white ">
           Top 5 Highest Volume Binance Ticker Data
         </h4>
 

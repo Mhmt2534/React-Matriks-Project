@@ -20,12 +20,11 @@ const PriceGraph = (symbol: any) => {
   const [inter, setInter] = useState(4);
 
   useEffect(() => {
-    console.log(" dsa" + symbol.symbol);
     switch (pointer) {
       case 0:
         axios
           .get(
-            `https://api.binance.com/api/v3/klines?symbol=${symbol.symbol}&interval=1h&limit=24`
+            `https://api.binance.com/api/v3/klines?symbol=${symbol.symbol}&interval=5m&limit=288`
           )
           .then((data: any) => {
             const formattedData = data.data.map((item: any) => ({
@@ -33,35 +32,41 @@ const PriceGraph = (symbol: any) => {
               price: parseFloat(item[4]),
             }));
             setCoinChar(formattedData);
-            setInter(1);
+            setInter(50);
           });
         break;
       case 1:
         axios
           .get(
-            `https://api.binance.com/api/v3/klines?symbol=${symbol.symbol}&interval=1h&limit=168`
+            `https://api.binance.com/api/v3/klines?symbol=${symbol.symbol}&interval=15m&limit=672`
           )
           .then((data: any) => {
             const formattedData = data.data.map((item: any) => ({
-              time: new Date(item[0]).toLocaleTimeString(),
+              time:
+                new Date(item[0]).toLocaleDateString() +
+                " " +
+                new Date(item[0]).toLocaleTimeString(),
               price: parseFloat(item[4]),
             }));
             setCoinChar(formattedData);
-            setInter(40);
+            setInter(200);
           });
         break;
       case 2:
         axios
           .get(
-            `https://api.binance.com/api/v3/klines?symbol=${symbol.symbol}&interval=1d&limit=30`
+            `https://api.binance.com/api/v3/klines?symbol=${symbol.symbol}&interval=1h&limit=720`
           )
           .then((data: any) => {
             const formattedData = data.data.map((item: any) => ({
-              time: new Date(item[0]).toLocaleTimeString(),
+              time:
+                new Date(item[0]).toLocaleDateString() +
+                " " +
+                new Date(item[0]).toLocaleTimeString(),
               price: parseFloat(item[4]),
             }));
             setCoinChar(formattedData);
-            setInter(5);
+            setInter(200);
           });
         break;
       case 3:
@@ -71,7 +76,10 @@ const PriceGraph = (symbol: any) => {
           )
           .then((data: any) => {
             const formattedData = data.data.map((item: any) => ({
-              time: new Date(item[0]).toLocaleTimeString(),
+              time:
+                new Date(item[0]).toLocaleDateString() +
+                " " +
+                new Date(item[0]).toLocaleTimeString(),
               price: parseFloat(item[4]),
             }));
             setCoinChar(formattedData);
@@ -124,7 +132,7 @@ const PriceGraph = (symbol: any) => {
           }}
         >
           <CartesianGrid strokeDasharray="3 3" />
-          <XAxis interval={inter} />
+          <XAxis interval={inter} dataKey="time" />
           <YAxis />
           <Tooltip />
           <Area

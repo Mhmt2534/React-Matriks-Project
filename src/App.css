@@ -1,0 +1,13 @@
+.dark-theme {
+  width: 100%;
+  height: 100%;
+  background-color: black;
+  color: white;
+}
+
+.light-theme {
+  width: 100%;
+  height: 100%;
+  background-color: white;
+  color: black;
+}

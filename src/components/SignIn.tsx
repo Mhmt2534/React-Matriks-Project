@@ -1,11 +1,20 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Dropdown, Image, Nav, NavDropdown } from "react-bootstrap";
 import { AuthContext } from "../context/AuthContext";
 import { useNavigate } from "react-router-dom";
+import { User } from "../models/User";
 
 const SignIn = () => {
+  const [userName, setUserName] = useState();
+
   const authContext = useContext(AuthContext);
   const navigate = useNavigate();
+
+  useEffect(() => {
+    const userData: User | any = localStorage.getItem("isSign");
+    const user = JSON.parse(userData);
+    setUserName(user.name);
+  });
 
   const handleSignOut = () => {
     localStorage.removeItem("isSign");
@@ -25,13 +34,9 @@ const SignIn = () => {
 
         <NavDropdown
           id="nav-dropdown-dark-example"
-          title={authContext?.userName}
+          title={userName}
           menuVariant="dark"
         >
-          <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>
-          <NavDropdown.Item href="#action/3.2">Another action</NavDropdown.Item>
-          <NavDropdown.Item href="#action/3.3">Something</NavDropdown.Item>
-          <NavDropdown.Divider />
           <NavDropdown.Item href="/" onClick={handleSignOut}>
             Sign Out
           </NavDropdown.Item>

@@ -16,7 +16,6 @@ const Home = () => {
       const response = await axios.get(
         "https://api.binance.com/api/v3/ticker/24hr"
       );
-      console.log(response);
 
       const usdtTickers = response.data.filter((ticker: Coin) =>
         ticker.symbol.endsWith("USDT")
@@ -29,7 +28,6 @@ const Home = () => {
       const top10Coins = sortedTickers.slice(0, 10);
 
       setCoins(top10Coins);
-      console.log(coins);
     };
 
     fetchTickers();
@@ -40,7 +38,6 @@ const Home = () => {
     if (savedFavorites) {
       setFavoritesCoin(JSON.parse(savedFavorites));
     }
-    console.log(savedFavorites);
   }, []);
 
   const authContext = useContext(AuthContext);
@@ -61,46 +58,48 @@ const Home = () => {
 
   return (
     <div>
-      <Container>
-        <Table striped bordered hover>
-          <thead>
-            <tr>
-              <th>Symbol</th>
-              <th>Volume</th>
-              <th>Detail</th>
-              <th>Add</th>
-            </tr>
-          </thead>
-          <tbody>
-            {coins.map((coin) => (
-              <tr key={coin.symbol} onClick={() => {}}>
-                <td>{coin.symbol}</td>
-                <td>{coin.volume}</td>
-                <td>
-                  <Button
-                    variant="success"
-                    onClick={() =>
-                      navigate(`/home/cryptodetail/${coin.symbol}`)
-                    }
-                  >
-                    Detail
-                  </Button>
-                </td>
-                <td>
-                  <Button
-                    variant="success"
-                    onClick={() => handleFavorite(coin)}
-                  >
-                    {favoritesCoin.some((fav) => fav.symbol === coin.symbol)
-                      ? "Remove from Favorites"
-                      : "Add to Favorites"}
-                  </Button>
-                </td>
+      <div className=" bg-dark text-white">
+        <div className="card-body">
+          <table className="table table-dark table-striped">
+            <thead>
+              <tr>
+                <th>Symbol</th>
+                <th>Volume</th>
+                <th>Detail</th>
+                <th>Add</th>
               </tr>
-            ))}
-          </tbody>
-        </Table>
-      </Container>
+            </thead>
+            <tbody>
+              {coins.map((coin) => (
+                <tr key={coin.symbol} onClick={() => {}}>
+                  <td>{coin.symbol}</td>
+                  <td>{coin.volume}</td>
+                  <td>
+                    <Button
+                      variant="success"
+                      onClick={() =>
+                        navigate(`/home/cryptodetail/${coin.symbol}`)
+                      }
+                    >
+                      Detail
+                    </Button>
+                  </td>
+                  <td>
+                    <Button
+                      variant="success"
+                      onClick={() => handleFavorite(coin)}
+                    >
+                      {favoritesCoin.some((fav) => fav.symbol === coin.symbol)
+                        ? "Remove from Favorites"
+                        : "Add to Favorites"}
+                    </Button>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </div>
     </div>
   );
 };

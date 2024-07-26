@@ -53,7 +53,13 @@ const Favorites = () => {
           </Table>
         </Container>
       ) : (
-        <Container style={{ marginTop: "20px", textAlign: "center" }}>
+        <Container
+          style={{
+            marginTop: "20px",
+            marginBottom: "119px",
+            textAlign: "center",
+          }}
+        >
           <h1>FAVORİ ÜRÜN YOK</h1>
         </Container>
       )}

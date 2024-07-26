@@ -8,12 +8,16 @@ import Login from "../pages/Login";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { Coin } from "../models/Coin";
+import { BiMoon, BiSun } from "react-icons/bi";
+import { ThemeContext } from "../context/ThemeContext";
 
-const Header: React.FC = () => {
+const Header: React.FC = (toggle) => {
   const [coins, setCoins] = useState<Coin[]>([]);
   const [isLoginn, setIsLoginn] = useState<boolean>();
+  const [them, setThem] = useState<boolean>(false);
 
   const context = useContext(AuthContext);
+  const themeContext = useContext(ThemeContext);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -21,7 +25,6 @@ const Header: React.FC = () => {
       const response = await axios.get(
         "https://api.binance.com/api/v3/ticker/24hr"
       );
-      console.log(response);
 
       const usdtTickers = response.data.filter((ticker: Coin) =>
         ticker.symbol.endsWith("USDT")
@@ -46,8 +49,9 @@ const Header: React.FC = () => {
     } else {
       setIsLoginn(false);
     }
-    console.log(savedFavorites);
-    console.log(isLoginn);
+
+    // console.log(savedFavorites);
+    // console.log(isLoginn);
   }, []);
 
   return (
@@ -99,6 +103,7 @@ const Header: React.FC = () => {
               </NavDropdown>
             </Nav>
             {isLoginn ? <SignIn /> : <SignOut />}
+            <span style={{ cursor: "pointer" }}></span>
           </Navbar.Collapse>
         </Container>
       </Navbar>

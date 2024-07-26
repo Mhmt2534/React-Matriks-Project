@@ -3,6 +3,9 @@ import "./Sign.css";
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
+import { FaLock, FaUser } from "react-icons/fa";
+
+import { MdEmail } from "react-icons/md";
 
 interface ISignUp {
   onRegister: (data: any) => void;
@@ -38,28 +41,63 @@ const SignUp: React.FC = () => {
   };
 
   return (
-    <div className="marg">
-      <p className="title">Registration Form</p>
-
-      <form className="Register" onSubmit={handleSubmit(onSubmit)}>
-        <input
-          type="text"
-          placeholder="name"
-          {...register("name", { required: true })}
-        />
-        <input type="text" placeholder="surename" {...register("surname")} />
-        <input
-          type="email"
-          placeholder="email"
-          {...register("email", { required: true })}
-        />
-        <input
-          type="password"
-          placeholder="password"
-          {...register("password", { required: true })}
-        />
-        <input type={"submit"} style={{ backgroundColor: "#a1eafb" }} />
-      </form>
+    <div id="SignCss" className="signuplog">
+      <div>
+        <div className="container">
+          <div className="screen">
+            <div className="screen__content">
+              <form className="login" onSubmit={handleSubmit(onSubmit)}>
+                <div className="login__field">
+                  <FaUser className="login_icon" />
+                  <input
+                    type="text"
+                    className="login__input"
+                    placeholder="Name"
+                    {...register("name", { required: true })}
+                  />
+                  {errors.email && (
+                    <span style={{ color: "red" }}>Email is mandatory </span>
+                  )}
+                </div>
+                <div className="login__field">
+                  <FaUser />
+                  <input
+                    type="text"
+                    className="login__input"
+                    placeholder="Surename"
+                    {...register("surname")}
+                  />
+                </div>
+                <div className="login__field">
+                  <MdEmail />
+                  <input
+                    type="email"
+                    className="login__input"
+                    placeholder="Email"
+                    {...register("email", { required: true })}
+                  />
+                </div>
+                <div className="login__field">
+                  <FaLock />
+                  <input
+                    type="password"
+                    className="login__input"
+                    placeholder="Password"
+                    {...register("password")}
+                  />
+                </div>
+                <input type={"submit"} className="login__submit" />
+              </form>
+            </div>
+            <div className="screen__background">
+              <span className="screen__background__shape screen__background__shape4"></span>
+              <span className="screen__background__shape screen__background__shape3"></span>
+              <span className="screen__background__shape screen__background__shape2"></span>
+              <span className="screen__background__shape screen__background__shape1"></span>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   );
 };
