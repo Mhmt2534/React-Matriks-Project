@@ -2,6 +2,7 @@ import { Container, Row, Col, Button } from "react-bootstrap";
 
 import "./FirstHome.css";
 import { useNavigate } from "react-router-dom";
+import { useEffect } from "react";
 
 const FirstHome = () => {
   const navigate = useNavigate();

@@ -29,15 +29,13 @@ function App() {
     const isSign = localStorage.getItem("isSign");
 
     isSign ? setLoggedIn(true) : setLoggedIn(false);
-  }, []);
 
-  const toggleTheme = () => {
-    themeContext?.setTheme(!themeContext?.theme);
-  };
+    console.log(themeContext?.theme);
+  }, []);
 
   return (
     <ThemeProvider>
-      <div className={themeContext?.theme ? "light-theme" : "dark-theme"}>
+      <div className={themeContext?.theme ? "dark-theme" : "light-theme"}>
         <AuthProvider>
           <ToastContainer position="bottom-right" limit={2} autoClose={3000} />
           <Header />
@@ -55,12 +53,18 @@ function App() {
               {loggedIn ? (
                 <Route path="/home" element={<Home />} />
               ) : (
-                <Route path="/home" element={<ErrorPage />} />
+                <Route
+                  path="/home"
+                  element={<RouteWrapper component={FirstHome} />}
+                />
               )}
               {loggedIn ? (
                 <Route path="/about" element={<About />} />
               ) : (
-                <Route path="/about" element={<ErrorPage />} />
+                <Route
+                  path="/about"
+                  element={<RouteWrapper component={FirstHome} />}
+                />
               )}
               {loggedIn ? (
                 <Route
@@ -70,13 +74,16 @@ function App() {
               ) : (
                 <Route
                   path="/home/cryptodetail/:symbol"
-                  element={<ErrorPage />}
+                  element={<RouteWrapper component={FirstHome} />}
                 />
               )}
               {loggedIn ? (
                 <Route path="/home/favorites" element={<Favorites />} />
               ) : (
-                <Route path="/home/favorites" element={<ErrorPage />} />
+                <Route
+                  path="/home/favorites"
+                  element={<RouteWrapper component={FirstHome} />}
+                />
               )}
             </Routes>
           </div>
@@ -86,5 +93,16 @@ function App() {
     </ThemeProvider>
   );
 }
+
+export interface RouteWrapperProps {
+  component: React.ComponentType;
+}
+
+const RouteWrapper: React.FC<RouteWrapperProps> = ({
+  component: Component,
+}) => {
+  toast.error("Lütfen Giriş Yapınız");
+  return <Component />;
+};
 
 export default App;

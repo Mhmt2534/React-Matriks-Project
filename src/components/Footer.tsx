@@ -8,7 +8,7 @@ const Footer = () => {
 
   return (
     <>
-      <div className="">
+      <div>
         <footer
           className="text-center text-lg-start"
           style={{ backgroundColor: "#db6930" }}

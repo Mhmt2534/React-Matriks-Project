@@ -4,15 +4,13 @@ import {
   Area,
   AreaChart,
   CartesianGrid,
-  Legend,
-  Line,
-  LineChart,
   ResponsiveContainer,
   Tooltip,
   XAxis,
   YAxis,
 } from "recharts";
 import "./PriceGraph.css";
+import { Button, Container } from "react-bootstrap";
 
 const PriceGraph = (symbol: any) => {
   const [coinChar, setCoinChar] = useState([]);
@@ -93,34 +91,6 @@ const PriceGraph = (symbol: any) => {
 
   return (
     <div>
-      <span
-        onClick={() => {
-          setPointer(0);
-        }}
-      >
-        24 Saat
-      </span>
-      <span
-        onClick={() => {
-          setPointer(1);
-        }}
-      >
-        7 Gün
-      </span>
-      <span
-        onClick={() => {
-          setPointer(2);
-        }}
-      >
-        1 Ay
-      </span>
-      <span
-        onClick={() => {
-          setPointer(3);
-        }}
-      >
-        1 Yıl
-      </span>
       <ResponsiveContainer width="100%" height={400}>
         <AreaChart
           data={coinChar}
@@ -144,6 +114,98 @@ const PriceGraph = (symbol: any) => {
           />
         </AreaChart>
       </ResponsiveContainer>
+      <Container>
+        <div
+          style={{ marginTop: "20px", textAlign: "center" }}
+          className="container"
+        >
+          {pointer == 0 ? (
+            <Button
+              variant="primary"
+              style={{ marginRight: "10px" }}
+              onClick={() => {
+                setPointer(0);
+              }}
+            >
+              Günlük
+            </Button>
+          ) : (
+            <Button
+              variant="outline-primary"
+              style={{ marginRight: "10px" }}
+              onClick={() => {
+                setPointer(0);
+              }}
+            >
+              Günlük
+            </Button>
+          )}
+
+          {pointer == 1 ? (
+            <Button
+              variant="primary"
+              style={{ marginRight: "10px" }}
+              onClick={() => {
+                setPointer(1);
+              }}
+            >
+              Haftalık
+            </Button>
+          ) : (
+            <Button
+              variant="outline-primary"
+              style={{ marginRight: "10px" }}
+              onClick={() => {
+                setPointer(1);
+              }}
+            >
+              Haftalık
+            </Button>
+          )}
+          {pointer == 2 ? (
+            <Button
+              variant="primary"
+              style={{ marginRight: "10px" }}
+              onClick={() => {
+                setPointer(2);
+              }}
+            >
+              Aylık
+            </Button>
+          ) : (
+            <Button
+              variant="outline-primary"
+              style={{ marginRight: "10px" }}
+              onClick={() => {
+                setPointer(2);
+              }}
+            >
+              Aylık
+            </Button>
+          )}
+          {pointer == 3 ? (
+            <Button
+              variant="primary"
+              style={{ marginRight: "10px" }}
+              onClick={() => {
+                setPointer(3);
+              }}
+            >
+              Yıllık
+            </Button>
+          ) : (
+            <Button
+              variant="outline-primary"
+              style={{ marginRight: "10px" }}
+              onClick={() => {
+                setPointer(3);
+              }}
+            >
+              Yıllık
+            </Button>
+          )}
+        </div>
+      </Container>
     </div>
   );
 };

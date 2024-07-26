@@ -11,7 +11,7 @@ import { Coin } from "../models/Coin";
 import { BiMoon, BiSun } from "react-icons/bi";
 import { ThemeContext } from "../context/ThemeContext";
 
-const Header: React.FC = (toggle) => {
+const Header: React.FC = () => {
   const [coins, setCoins] = useState<Coin[]>([]);
   const [isLoginn, setIsLoginn] = useState<boolean>();
   const [them, setThem] = useState<boolean>(false);
@@ -91,19 +91,42 @@ const Header: React.FC = (toggle) => {
               >
                 About
               </Nav.Link>
-              <NavDropdown title="Coin Details" id="basic-nav-dropdown">
-                {coins.map((coin) => (
-                  <NavDropdown.Item
-                    href={`/home/cryptodetail/${coin.symbol}`}
-                    key={coin.symbol}
-                  >
-                    {coin.symbol}
-                  </NavDropdown.Item>
-                ))}
-              </NavDropdown>
+              <Nav.Link
+                onClick={() => {
+                  navigate(`/home/cryptodetail/BTCUSDT`);
+                }}
+              >
+                Coin Details
+              </Nav.Link>
             </Nav>
             {isLoginn ? <SignIn /> : <SignOut />}
-            <span style={{ cursor: "pointer" }}></span>
+            <span style={{ cursor: "pointer" }}>
+              {them ? (
+                <BiSun
+                  onClick={() => {
+                    setThem(false);
+                    themeContext?.setTheme(false);
+                  }}
+                  style={{
+                    marginLeft: "10px",
+                    fontSize: "24px",
+                    color: "white",
+                  }}
+                />
+              ) : (
+                <BiMoon
+                  onClick={() => {
+                    setThem(true);
+                    themeContext?.setTheme(true);
+                  }}
+                  style={{
+                    marginLeft: "10px",
+                    fontSize: "24px",
+                    color: "white",
+                  }}
+                />
+              )}
+            </span>
           </Navbar.Collapse>
         </Container>
       </Navbar>

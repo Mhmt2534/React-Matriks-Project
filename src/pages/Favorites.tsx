@@ -1,10 +1,15 @@
 import React, { useEffect, useState } from "react";
 import { Coin } from "../models/Coin";
 import { Button, Container, Table } from "react-bootstrap";
+import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
+import { FaRegStar, FaStar } from "react-icons/fa";
 
 const Favorites = () => {
   const [favorites, setFavorites] = useState<Coin[]>([]);
   const [isThere, setIsThere] = useState<boolean>();
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     const savedFavorites: any = localStorage.getItem("favorites");
@@ -21,6 +26,7 @@ const Favorites = () => {
         setIsThere(true);
       } else {
         setIsThere(false);
+        navigate("/home");
       }
     }
   }, []);
@@ -39,18 +45,27 @@ const Favorites = () => {
             <tbody>
               {favorites.map((fav: Coin | any) => (
                 <tr>
-                  <th>{fav.symbol}</th>
+                  <th>
+                    <span style={{ cursor: "pointer" }}>
+                      {" "}
+                      <FaStar
+                        style={{ marginBottom: "6px" }}
+                        onClick={() => handleRemove(fav)}
+                      />
+                    </span>{" "}
+                    {fav.symbol}
+                  </th>
                   <td>{fav.lastPrice}</td>
-                  <td>
-                    {" "}
-                    <Button variant="success" onClick={() => handleRemove(fav)}>
-                      Remove
-                    </Button>
-                  </td>
                 </tr>
               ))}
             </tbody>
           </Table>
+          <br />
+          <br />
+          <br />
+          <br />
+          <br />
+          <br />
         </Container>
       ) : (
         <Container
