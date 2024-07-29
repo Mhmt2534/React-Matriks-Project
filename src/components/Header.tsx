@@ -101,11 +101,10 @@ const Header: React.FC = () => {
             </Nav>
             {isLoginn ? <SignIn /> : <SignOut />}
             <span style={{ cursor: "pointer" }}>
-              {them ? (
-                <BiSun
+              {themeContext?.theme ? (
+                <BiMoon
                   onClick={() => {
-                    setThem(false);
-                    themeContext?.setTheme(false);
+                    themeContext?.toggleTheme();
                   }}
                   style={{
                     marginLeft: "10px",
@@ -114,10 +113,9 @@ const Header: React.FC = () => {
                   }}
                 />
               ) : (
-                <BiMoon
+                <BiSun
                   onClick={() => {
-                    setThem(true);
-                    themeContext?.setTheme(true);
+                    themeContext?.toggleTheme();
                   }}
                   style={{
                     marginLeft: "10px",

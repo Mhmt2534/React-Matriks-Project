@@ -8,6 +8,7 @@ import { FaRegStar, FaStar } from "react-icons/fa";
 const Favorites = () => {
   const [favorites, setFavorites] = useState<Coin[]>([]);
   const [isThere, setIsThere] = useState<boolean>();
+  const [isEmpty, setIsEmpty] = useState<boolean>(false);
 
   const navigate = useNavigate();
 
@@ -27,6 +28,7 @@ const Favorites = () => {
       } else {
         setIsThere(false);
         navigate("/home");
+        toast.error("Favori ürün yok.");
       }
     }
   }, []);

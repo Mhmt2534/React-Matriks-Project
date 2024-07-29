@@ -92,8 +92,10 @@ const Home = () => {
           <table className="table table-dark table-striped">
             <thead>
               <tr>
-                <th>Symbol</th>
                 <th>
+                  <span style={{ marginLeft: "208px" }}>Symbol</span>
+                </th>
+                <th style={{ textAlign: "center" }}>
                   Volume{" "}
                   <span style={{ cursor: "pointer", color: "white" }}>
                     {sorted ? (
@@ -111,7 +113,7 @@ const Home = () => {
                     )}
                   </span>
                 </th>
-                <th>Detail</th>
+                <th style={{ textAlign: "center" }}>Detail</th>
               </tr>
             </thead>
             <tbody>
@@ -119,7 +121,7 @@ const Home = () => {
                 <tr key={coin.symbol} onClick={() => {}}>
                   <td>
                     <span
-                      style={{ cursor: "pointer" }}
+                      style={{ cursor: "pointer", marginLeft: "158px" }}
                       onClick={() => handleFavorite(coin)}
                     >
                       {favoritesCoin.some(
@@ -132,8 +134,8 @@ const Home = () => {
                     </span>
                     <span style={{ marginLeft: "30px" }}> {coin.symbol}</span>
                   </td>
-                  <td>{coin.volume}</td>
-                  <td>
+                  <td style={{ textAlign: "center" }}>{coin.volume}</td>
+                  <td style={{ textAlign: "center" }}>
                     <Button
                       variant="success"
                       onClick={() =>

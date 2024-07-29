@@ -15,11 +15,9 @@ interface ThemeProviderProps {
 const ThemeProvider: React.FC<ThemeProviderProps> = ({ children }) => {
   const [theme, setTheme] = useState<boolean>(false);
 
-  console.log(theme);
-
   const toggleTheme = () => {
     setTheme((prevTheme) => !prevTheme);
-    console.log("dsadas");
+    console.log(theme);
   };
 
   return (

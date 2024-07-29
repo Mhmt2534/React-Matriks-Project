@@ -18,7 +18,7 @@ import ErrorPage from "./pages/ErrorPage";
 import { ThemeContext, ThemeProvider } from "./context/ThemeContext";
 
 function App() {
-  const [loggedIn, setLoggedIn] = useState<boolean>();
+  const [loggedIn, setLoggedIn] = useState<boolean>(true);
   const [appTheme, setAppTheme] = useState<boolean>();
 
   const context = useContext(AuthContext);
@@ -29,14 +29,18 @@ function App() {
     const isSign = localStorage.getItem("isSign");
 
     isSign ? setLoggedIn(true) : setLoggedIn(false);
-
-    console.log(themeContext?.theme);
   }, []);
+
+  useEffect(() => {
+    if (themeContext) {
+      setAppTheme(themeContext.theme);
+    }
+  }, [themeContext?.theme]);
 
   return (
     <ThemeProvider>
-      <div className={themeContext?.theme ? "dark-theme" : "light-theme"}>
-        <AuthProvider>
+      <AuthProvider>
+        <div className={appTheme ? "dark-theme" : "light-theme"}>
           <ToastContainer position="bottom-right" limit={2} autoClose={3000} />
           <Header />
           <div style={{ marginBottom: "80px" }}>
@@ -88,8 +92,8 @@ function App() {
             </Routes>
           </div>
           <Footer />
-        </AuthProvider>
-      </div>
+        </div>
+      </AuthProvider>
     </ThemeProvider>
   );
 }
@@ -101,7 +105,8 @@ export interface RouteWrapperProps {
 const RouteWrapper: React.FC<RouteWrapperProps> = ({
   component: Component,
 }) => {
-  toast.error("Lütfen Giriş Yapınız");
+  toast.error("Lütfen giriş yapınız");
+
   return <Component />;
 };
 
