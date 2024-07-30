@@ -1,39 +1,80 @@
-import axios, { Axios } from "axios";
-import React, { useEffect, useState } from "react";
+import axios from "axios";
+import React, { useContext, useEffect, useState } from "react";
 import { Container, Table, Tooltip } from "react-bootstrap";
 import { useParams } from "react-router-dom";
 import { Coin } from "../models/Coin";
 import coinLogo from "../assets/images-Photoroom.png";
 import PriceGraph from "../components/PriceGraph";
 import CoinDetailSelect from "../components/CoinDetailSelect";
+import { ColorContext } from "../context/ColorContext";
 
 const CryptoDetails = () => {
   const [coinDetail, setCoinDetail] = useState<Coin>();
-  const [coinSymbol, setCoinSymbol] = useState<Coin>();
+  const [pricePositive, setPricePositive] = useState<boolean>();
 
   let { symbol } = useParams();
   console.log({ symbol });
 
   useEffect(() => {
-    axios
-      .get(`https://api.binance.com/api/v3/ticker/24hr?symbol=${symbol}`)
-      .then((response) => {
-        setCoinDetail(response.data);
-      });
-  }, []);
+    const fetchData = async () => {
+      const response = await axios.get(
+        `https://api.binance.com/api/v3/ticker/24hr?symbol=${symbol}`
+      );
+      setCoinDetail(response.data);
+    };
+    fetchData();
+  }, [symbol]);
 
-  useEffect(() => {}, [coinSymbol]);
+  useEffect(() => {
+    if (coinDetail) {
+      const stringPriceChange = coinDetail.priceChange;
+      const intNumber = Number(stringPriceChange);
+      setPricePositive(intNumber >= 0);
+    }
+  }, [coinDetail]);
 
   const formatVolume = (coinInfo: string) => {
-    return parseFloat(coinInfo).toLocaleString("en-US");
+    const number = parseFloat(coinInfo);
+    if (isNaN(number)) {
+      return coinInfo;
+    }
+    return new Intl.NumberFormat("en-US", {
+      minimumFractionDigits: 1, // Minimum kesirli basamak sayısı
+      maximumFractionDigits: 8, // Maksimum kesirli basamak sayısı
+    }).format(number);
+  };
+
+  const colorContext = useContext(ColorContext);
+
+  if (!colorContext) {
+    throw "HATA";
+  }
+
+  const { isBlack } = colorContext;
+
+  const className1: any = () => {
+    return isBlack
+      ? "card bg-dark  text-white mb-3"
+      : "card bg-white  text-black mb-3";
+  };
+
+  const className2: any = () => {
+    return isBlack
+      ? "table table-dark table-striped"
+      : "table table-white table-striped";
+  };
+
+  const className3: any = () => {
+    return isBlack
+      ? "card bg-dark  text-white mt-4"
+      : "card bg-white  text-black mt-4";
   };
 
   return (
     <div>
-      <div className="container ">
+      <div className="container">
         <br />
-
-        <div className="card bg-dark text-white mb-3">
+        <div className={className1()}>
           <div className="card-body">
             <div className="row align-items-center">
               <div className="col-3 d-flex align-items-center">
@@ -42,15 +83,17 @@ const CryptoDetails = () => {
                   className="me-2"
                   style={{ height: "40px" }}
                 />
-                {/* <h6 className="mb-0">{coinDetail?.symbol}</h6> */}
                 <CoinDetailSelect symbol={coinDetail?.symbol} />
               </div>
               <div className="col-4">
-                <h6 className="mb-0">Last Price: {coinDetail?.lastPrice}</h6>
+                <h6 className="mb-0">Son Fiyat: {coinDetail?.lastPrice}</h6>
               </div>
               <div className="col-4">
                 <h6 className={`mb-0`}>
-                  Price Change Percent: {coinDetail?.priceChangePercent}
+                  Fiyat Değişim Yüzdesi:{" "}
+                  <span style={{ color: pricePositive ? "green" : "red" }}>
+                    {coinDetail?.priceChangePercent}
+                  </span>
                 </h6>
               </div>
             </div>
@@ -58,69 +101,71 @@ const CryptoDetails = () => {
         </div>
 
         {coinDetail && (
-          <div className="card bg-dark text-white mt-4">
+          <div className={className3()}>
             <div className="card-body">
-              <h5 className="card-title">Details for {coinDetail?.symbol}</h5>
-              <table className="table table-dark table-striped">
+              <h5 className="card-title">{coinDetail?.symbol} için Detaylar</h5>
+              <table className={className2()}>
                 <tbody>
                   <tr>
-                    <th>Symbol</th>
+                    <th>Sembol</th>
                     <td>{coinDetail?.symbol}</td>
                   </tr>
                   <tr>
-                    <th>Price Change</th>
+                    <th>Fiyat Değişimi</th>
                     <td>{formatVolume(coinDetail?.priceChange)}</td>
                   </tr>
                   <tr>
-                    <th>Price Change Percent</th>
-                    <td>{formatVolume(coinDetail?.priceChangePercent)}%</td>
+                    <th>Fiyat Değişim Yüzdesi</th>
+                    <td style={{ color: pricePositive ? "green" : "red" }}>
+                      {formatVolume(coinDetail?.priceChangePercent)}%
+                    </td>
                   </tr>
                   <tr>
-                    <th>Weighted Avg Price</th>
+                    <th>Ağırlıklı Ortalama Fiyat</th>
                     <td>{formatVolume(coinDetail?.weightedAvgPrice)}</td>
                   </tr>
                   <tr>
-                    <th>Prev Close Price</th>
+                    <th>Önceki Kapanış Fiyatı</th>
                     <td>{formatVolume(coinDetail?.prevClosePrice)}</td>
                   </tr>
                   <tr>
-                    <th>Last Price</th>
+                    <th>Son Fiyat</th>
                     <td>{formatVolume(coinDetail?.lastPrice)}</td>
                   </tr>
                   <tr>
-                    <th>Last Qty</th>
+                    <th>Son Miktar</th>
                     <td>{formatVolume(coinDetail?.lastQty)}</td>
                   </tr>
                   <tr>
-                    <th>Bid Price</th>
+                    <th>Teklif Fiyatı</th>
                     <td>{formatVolume(coinDetail?.bidPrice)}</td>
                   </tr>
                   <tr>
-                    <th>Bid Qty</th>
+                    <th>Teklif Miktarı</th>
                     <td>{formatVolume(coinDetail?.bidQty)}</td>
                   </tr>
                   <tr>
-                    <th>Ask Price</th>
+                    <th>İstek Fiyatı</th>
                     <td>{formatVolume(coinDetail?.askPrice)}</td>
                   </tr>
                   <tr>
-                    <th>Ask Qty</th>
+                    <th>İstek Miktarı</th>
                     <td>{formatVolume(coinDetail?.askQty)}</td>
                   </tr>
                   <tr>
-                    <th>Open Price</th>
+                    <th>Açılış Fiyatı</th>
                     <td>{formatVolume(coinDetail?.openPrice)}</td>
                   </tr>
                   <tr>
-                    <th>High Price</th>
+                    <th>Yüksek Fiyat</th>
                     <td>{formatVolume(coinDetail?.highPrice)}</td>
                   </tr>
                   <tr>
-                    <th>Low Price</th>
+                    <th>Düşük Fiyat</th>
                     <td>{formatVolume(coinDetail?.lowPrice)}</td>
                   </tr>
                   <tr>
-                    <th>Volume</th>
+                    <th>Hacim</th>
                     <td>{formatVolume(coinDetail?.volume)}</td>
                   </tr>
                 </tbody>

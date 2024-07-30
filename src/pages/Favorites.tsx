@@ -37,6 +37,11 @@ const Favorites = () => {
     const newCoins = favorites.filter((fav) => fav.symbol !== newFav.symbol);
     setFavorites(newCoins);
     localStorage.setItem("favorites", JSON.stringify(newCoins));
+
+    if (newCoins.length < 1) {
+      navigate("/home");
+      toast.error("Favori ürün yok.");
+    }
   };
 
   return (

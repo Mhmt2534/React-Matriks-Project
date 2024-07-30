@@ -6,6 +6,7 @@ import { Button, Container, Table } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import { FaArrowUpShortWide, FaArrowUpWideShort } from "react-icons/fa6";
 import { FaRegStar, FaStar } from "react-icons/fa";
+import { ColorContext } from "../context/ColorContext";
 
 const Home = () => {
   const [coins, setCoins] = useState<Coin[]>([]);
@@ -71,6 +72,25 @@ const Home = () => {
 
   const authContext = useContext(AuthContext);
 
+  const colorContext = useContext(ColorContext);
+
+  if (!colorContext) {
+    throw "HATA";
+  }
+
+  const { isBlack } = colorContext;
+
+  const className: any = () => {
+    return isBlack
+      ? "table table-dark table-striped"
+      : "table table-white table-striped";
+  };
+
+  const style = {
+    cursor: "pointer",
+    color: isBlack ? "white" : "black",
+  };
+
   useEffect(() => {
     localStorage.setItem("favorites", JSON.stringify(favoritesCoin));
   }, [favoritesCoin]);
@@ -90,10 +110,10 @@ const Home = () => {
   };
 
   return (
-    <div>
+    <div className="container">
       <div className=" bg-dark text-white">
         <div className="card-body">
-          <table className="table table-dark table-striped">
+          <table className={className()}>
             <thead>
               <tr>
                 <th>
@@ -101,7 +121,7 @@ const Home = () => {
                 </th>
                 <th style={{ textAlign: "center" }}>
                   Volume{" "}
-                  <span style={{ cursor: "pointer", color: "white" }}>
+                  <span style={style}>
                     {sorted ? (
                       <FaArrowUpShortWide
                         onClick={() => {
