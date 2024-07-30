@@ -24,12 +24,14 @@ const CryptoDetails = () => {
 
   useEffect(() => {}, [coinSymbol]);
 
+  const formatVolume = (coinInfo: string) => {
+    return parseFloat(coinInfo).toLocaleString("en-US");
+  };
+
   return (
     <div>
       <div className="container ">
-        <h4 className="text-white ">
-          Top 5 Highest Volume Binance Ticker Data
-        </h4>
+        <br />
 
         <div className="card bg-dark text-white mb-3">
           <div className="card-body">
@@ -67,59 +69,59 @@ const CryptoDetails = () => {
                   </tr>
                   <tr>
                     <th>Price Change</th>
-                    <td>{coinDetail?.priceChange}</td>
+                    <td>{formatVolume(coinDetail?.priceChange)}</td>
                   </tr>
                   <tr>
                     <th>Price Change Percent</th>
-                    <td>{coinDetail?.priceChangePercent}%</td>
+                    <td>{formatVolume(coinDetail?.priceChangePercent)}%</td>
                   </tr>
                   <tr>
                     <th>Weighted Avg Price</th>
-                    <td>{coinDetail?.weightedAvgPrice}</td>
+                    <td>{formatVolume(coinDetail?.weightedAvgPrice)}</td>
                   </tr>
                   <tr>
                     <th>Prev Close Price</th>
-                    <td>{coinDetail?.prevClosePrice}</td>
+                    <td>{formatVolume(coinDetail?.prevClosePrice)}</td>
                   </tr>
                   <tr>
                     <th>Last Price</th>
-                    <td>{coinDetail?.lastPrice}</td>
+                    <td>{formatVolume(coinDetail?.lastPrice)}</td>
                   </tr>
                   <tr>
                     <th>Last Qty</th>
-                    <td>{coinDetail?.lastQty}</td>
+                    <td>{formatVolume(coinDetail?.lastQty)}</td>
                   </tr>
                   <tr>
                     <th>Bid Price</th>
-                    <td>{coinDetail?.bidPrice}</td>
+                    <td>{formatVolume(coinDetail?.bidPrice)}</td>
                   </tr>
                   <tr>
                     <th>Bid Qty</th>
-                    <td>{coinDetail?.bidQty}</td>
+                    <td>{formatVolume(coinDetail?.bidQty)}</td>
                   </tr>
                   <tr>
                     <th>Ask Price</th>
-                    <td>{coinDetail?.askPrice}</td>
+                    <td>{formatVolume(coinDetail?.askPrice)}</td>
                   </tr>
                   <tr>
                     <th>Ask Qty</th>
-                    <td>{coinDetail?.askQty}</td>
+                    <td>{formatVolume(coinDetail?.askQty)}</td>
                   </tr>
                   <tr>
                     <th>Open Price</th>
-                    <td>{coinDetail?.openPrice}</td>
+                    <td>{formatVolume(coinDetail?.openPrice)}</td>
                   </tr>
                   <tr>
                     <th>High Price</th>
-                    <td>{coinDetail?.highPrice}</td>
+                    <td>{formatVolume(coinDetail?.highPrice)}</td>
                   </tr>
                   <tr>
                     <th>Low Price</th>
-                    <td>{coinDetail?.lowPrice}</td>
+                    <td>{formatVolume(coinDetail?.lowPrice)}</td>
                   </tr>
                   <tr>
                     <th>Volume</th>
-                    <td>{coinDetail?.volume}</td>
+                    <td>{formatVolume(coinDetail?.volume)}</td>
                   </tr>
                 </tbody>
               </table>

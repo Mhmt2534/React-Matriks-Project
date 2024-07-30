@@ -15,7 +15,7 @@ import CryptoDetails from "./pages/CryptoDetails";
 import Favorites from "./pages/Favorites";
 import About from "./pages/About";
 import ErrorPage from "./pages/ErrorPage";
-import { ThemeContext, ThemeProvider } from "./context/ThemeContext";
+import { ColorContext, ColorProvider } from "./context/ColorContext";
 
 function App() {
   const [loggedIn, setLoggedIn] = useState<boolean>(true);
@@ -23,7 +23,18 @@ function App() {
 
   const context = useContext(AuthContext);
 
-  const themeContext = useContext(ThemeContext);
+  const colorContext = useContext(ColorContext);
+
+  if (!colorContext) {
+    throw new Error("ColorContext must be used within a ColorProvider");
+  }
+
+  const { isBlack } = colorContext;
+
+  const style = {
+    backgroundColor: isBlack ? "black" : "white",
+    color: isBlack ? "white" : "black",
+  };
 
   useEffect(() => {
     const isSign = localStorage.getItem("isSign");
@@ -31,70 +42,62 @@ function App() {
     isSign ? setLoggedIn(true) : setLoggedIn(false);
   }, []);
 
-  useEffect(() => {
-    if (themeContext) {
-      setAppTheme(themeContext.theme);
-    }
-  }, [themeContext?.theme]);
-
   return (
-    <ThemeProvider>
-      <AuthProvider>
-        <div className={appTheme ? "dark-theme" : "light-theme"}>
-          <ToastContainer position="bottom-right" limit={2} autoClose={3000} />
-          <Header />
-          <div style={{ marginBottom: "80px" }}>
-            <Routes>
-              {loggedIn ? (
-                <Route path="/" element={<Home />} />
-              ) : (
-                <Route path="/" element={<FirstHome />} />
-              )}
-              <Route path="/login" element={<Login />} />
+    <AuthProvider>
+      <div style={style}>
+        <ToastContainer position="bottom-right" limit={2} autoClose={3000} />
+        <Header />
+        <div style={{ marginBottom: "80px" }}>
+          <Routes>
+            {loggedIn ? (
+              <Route path="/" element={<Home />} />
+            ) : (
+              <Route path="/" element={<FirstHome />} />
+            )}
+            <Route path="/login" element={<Login />} />
 
-              <Route path="/signup" element={<SignUp />} />
+            <Route path="/signup" element={<SignUp />} />
 
-              {loggedIn ? (
-                <Route path="/home" element={<Home />} />
-              ) : (
-                <Route
-                  path="/home"
-                  element={<RouteWrapper component={FirstHome} />}
-                />
-              )}
-              {loggedIn ? (
-                <Route path="/about" element={<About />} />
-              ) : (
-                <Route
-                  path="/about"
-                  element={<RouteWrapper component={FirstHome} />}
-                />
-              )}
-              {loggedIn ? (
-                <Route
-                  path="/home/cryptodetail/:symbol"
-                  element={<CryptoDetails />}
-                />
-              ) : (
-                <Route
-                  path="/home/cryptodetail/:symbol"
-                  element={<RouteWrapper component={FirstHome} />}
-                />
-              )}
-              {loggedIn ? (
-                <Route path="/home/favorites" element={<Favorites />} />
-              ) : (
-                <Route
-                  path="/home/favorites"
-                  element={<RouteWrapper component={FirstHome} />}
-                />
-              )}
-            </Routes>
-          </div>
-          <Footer />
+            {loggedIn ? (
+              <Route path="/home" element={<Home />} />
+            ) : (
+              <Route
+                path="/home"
+                element={<RouteWrapper component={FirstHome} />}
+              />
+            )}
+            {loggedIn ? (
+              <Route path="/about" element={<About />} />
+            ) : (
+              <Route
+                path="/about"
+                element={<RouteWrapper component={FirstHome} />}
+              />
+            )}
+            {loggedIn ? (
+              <Route
+                path="/home/cryptodetail/:symbol"
+                element={<CryptoDetails />}
+              />
+            ) : (
+              <Route
+                path="/home/cryptodetail/:symbol"
+                element={<RouteWrapper component={FirstHome} />}
+              />
+            )}
+            {loggedIn ? (
+              <Route path="/home/favorites" element={<Favorites />} />
+            ) : (
+              <Route
+                path="/home/favorites"
+                element={<RouteWrapper component={FirstHome} />}
+              />
+            )}
+          </Routes>
         </div>
-      </AuthProvider>
-    </ThemeProvider>
+        <Footer />
+      </div>
+    </AuthProvider>
   );
 }
 

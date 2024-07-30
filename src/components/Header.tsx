@@ -9,7 +9,7 @@ import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { Coin } from "../models/Coin";
 import { BiMoon, BiSun } from "react-icons/bi";
-import { ThemeContext } from "../context/ThemeContext";
+import { ColorContext } from "../context/ColorContext";
 
 const Header: React.FC = () => {
   const [coins, setCoins] = useState<Coin[]>([]);
@@ -17,7 +17,15 @@ const Header: React.FC = () => {
   const [them, setThem] = useState<boolean>(false);
 
   const context = useContext(AuthContext);
-  const themeContext = useContext(ThemeContext);
+
+  const colorContext = useContext(ColorContext);
+
+  if (!colorContext) {
+    throw new Error("ColorContext must be used within a ColorProvider");
+  }
+
+  const { toggleColor, isBlack } = colorContext;
+
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -101,11 +109,9 @@ const Header: React.FC = () => {
             </Nav>
             {isLoginn ? <SignIn /> : <SignOut />}
             <span style={{ cursor: "pointer" }}>
-              {themeContext?.theme ? (
+              {isBlack ? (
                 <BiMoon
-                  onClick={() => {
-                    themeContext?.toggleTheme();
-                  }}
+                  onClick={toggleColor}
                   style={{
                     marginLeft: "10px",
                     fontSize: "24px",
@@ -114,9 +120,7 @@ const Header: React.FC = () => {
                 />
               ) : (
                 <BiSun
-                  onClick={() => {
-                    themeContext?.toggleTheme();
-                  }}
+                  onClick={toggleColor}
                   style={{
                     marginLeft: "10px",
                     fontSize: "24px",

@@ -85,6 +85,10 @@ const Home = () => {
     }
   };
 
+  const formatVolume = (volume: string) => {
+    return parseFloat(volume).toLocaleString("en-US");
+  };
+
   return (
     <div>
       <div className=" bg-dark text-white">
@@ -134,7 +138,9 @@ const Home = () => {
                     </span>
                     <span style={{ marginLeft: "30px" }}> {coin.symbol}</span>
                   </td>
-                  <td style={{ textAlign: "center" }}>{coin.volume}</td>
+                  <td style={{ textAlign: "center" }}>
+                    {formatVolume(coin.volume)}
+                  </td>
                   <td style={{ textAlign: "center" }}>
                     <Button
                       variant="success"

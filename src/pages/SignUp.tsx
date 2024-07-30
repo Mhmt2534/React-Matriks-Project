@@ -1,11 +1,12 @@
 import { useForm } from "react-hook-form";
 import "./Sign.css";
-import React from "react";
+import React, { useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import { FaLock, FaUser } from "react-icons/fa";
 
 import { MdEmail } from "react-icons/md";
+import { ColorContext } from "../context/ColorContext";
 
 interface ISignUp {
   onRegister: (data: any) => void;
@@ -40,6 +41,10 @@ const SignUp: React.FC = () => {
     }
   };
 
+  const style = {
+    color: "black",
+  };
+
   return (
     <div id="SignCss" className="signuplog">
       <div>
@@ -48,7 +53,7 @@ const SignUp: React.FC = () => {
             <div className="screen__content">
               <form className="login" onSubmit={handleSubmit(onSubmit)}>
                 <div className="login__field">
-                  <FaUser className="login_icon" />
+                  <FaUser className="login_icon" style={style} />
                   <input
                     type="text"
                     className="login__input"
@@ -60,7 +65,7 @@ const SignUp: React.FC = () => {
                   )}
                 </div>
                 <div className="login__field">
-                  <FaUser />
+                  <FaUser style={style} />
                   <input
                     type="text"
                     className="login__input"
@@ -69,7 +74,7 @@ const SignUp: React.FC = () => {
                   />
                 </div>
                 <div className="login__field">
-                  <MdEmail />
+                  <MdEmail style={style} />
                   <input
                     type="email"
                     className="login__input"
@@ -78,7 +83,7 @@ const SignUp: React.FC = () => {
                   />
                 </div>
                 <div className="login__field">
-                  <FaLock />
+                  <FaLock style={style} />
                   <input
                     type="password"
                     className="login__input"

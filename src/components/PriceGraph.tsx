@@ -90,7 +90,7 @@ const PriceGraph = (symbol: any) => {
   }, [pointer]);
 
   return (
-    <div>
+    <div style={{ color: "black" }}>
       <ResponsiveContainer width="100%" height={400}>
         <AreaChart
           data={coinChar}

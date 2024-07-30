@@ -1,9 +1,14 @@
-import React from "react";
+import React, { useContext } from "react";
 import "./About.css";
+import { ColorContext } from "../context/ColorContext";
 
 const About = () => {
+  const style = {
+    color: "black",
+  };
+
   return (
-    <div className="about-wrapper">
+    <div className="about-wrapper" style={style}>
       <div className="about-section">
         <div className="about-container">
           <h2>Türkçe</h2>

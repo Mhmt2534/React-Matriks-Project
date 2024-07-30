@@ -9,6 +9,7 @@ import { FaUser } from "react-icons/fa";
 import { FaLock } from "react-icons/fa";
 import { FaFacebook } from "react-icons/fa";
 import { FaInstagram } from "react-icons/fa";
+import { ColorContext } from "../context/ColorContext";
 
 interface ILogin {
   onLogin: (data: any) => void;
@@ -56,6 +57,10 @@ const Login: React.FC = () => {
     }
   };
 
+  const style = {
+    color: "black",
+  };
+
   return (
     <div id="SignCss" className="loginlog">
       <div>
@@ -64,7 +69,7 @@ const Login: React.FC = () => {
             <div className="screen__content">
               <form className="login" onSubmit={handleSubmit(onSubmit)}>
                 <div className="login__field">
-                  <FaUser className="login_icon" />
+                  <FaUser className="login_icon" style={style} />
                   <input
                     type="email"
                     className="login__input"
@@ -76,7 +81,7 @@ const Login: React.FC = () => {
                   )}
                 </div>
                 <div className="login__field">
-                  <FaLock />
+                  <FaLock style={style} />
                   <input
                     type="password"
                     className="login__input"
