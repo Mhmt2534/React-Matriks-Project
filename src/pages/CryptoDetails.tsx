@@ -112,7 +112,9 @@ const CryptoDetails = () => {
                   </tr>
                   <tr>
                     <th>Fiyat Değişimi</th>
-                    <td>{formatVolume(coinDetail?.priceChange)}</td>
+                    <td style={{ color: pricePositive ? "green" : "red" }}>
+                      {formatVolume(coinDetail?.priceChange)}
+                    </td>
                   </tr>
                   <tr>
                     <th>Fiyat Değişim Yüzdesi</th>

@@ -10,6 +10,7 @@ import { FaLock } from "react-icons/fa";
 import { FaFacebook } from "react-icons/fa";
 import { FaInstagram } from "react-icons/fa";
 import { ColorContext } from "../context/ColorContext";
+import { UserService } from "../services/UserServices";
 
 interface ILogin {
   onLogin: (data: any) => void;
@@ -26,35 +27,41 @@ const Login: React.FC = () => {
     formState: { errors },
   } = useForm();
 
+  // const onSubmit = (data: any) => {
+  //   const email = data.email;
+  //   const storedData = localStorage.getItem(email);
+
+  //   if (storedData) {
+  //     const userData: any = JSON.parse(storedData);
+  //     if (userData) {
+  //       // getItem can return actual value or null
+  //       if (userData.password === data.password) {
+  //         authContext?.setIsLogin(true);
+  //         authContext?.setUserName(userData.name);
+
+  //         localStorage.setItem("isSign", JSON.stringify(userData));
+
+  //         toast.success(`${userData.name}  You Are Successfully Logged In`);
+  //         console.log(`${userData.name}  You Are Successfully Logged In`);
+  //         window.location.assign("/home");
+  //       } else {
+  //         toast.error("Email or Password is not matching with our record");
+  //         console.log("a");
+  //       }
+  //     } else {
+  //       toast.error("Email or Password is not matching with our record");
+  //       console.log("b");
+  //     }
+  //   } else {
+  //     toast.error("Email or Password is not matching with our record");
+  //     console.log(`c`);
+  //   }
+  // };
+
   const onSubmit = (data: any) => {
-    const email = data.email;
-    const storedData = localStorage.getItem(email);
-
-    if (storedData) {
-      const userData: any = JSON.parse(storedData);
-      if (userData) {
-        // getItem can return actual value or null
-        if (userData.password === data.password) {
-          authContext?.setIsLogin(true);
-          authContext?.setUserName(userData.name);
-
-          localStorage.setItem("isSign", JSON.stringify(userData));
-
-          toast.success(`${userData.name}  You Are Successfully Logged In`);
-          console.log(`${userData.name}  You Are Successfully Logged In`);
-          window.location.assign("/home");
-        } else {
-          toast.error("Email or Password is not matching with our record");
-          console.log("a");
-        }
-      } else {
-        toast.error("Email or Password is not matching with our record");
-        console.log("b");
-      }
-    } else {
-      toast.error("Email or Password is not matching with our record");
-      console.log(`c`);
-    }
+    let userService = new UserService();
+    userService.getName(data.email);
+    // userService.userCheck(data);
   };
 
   const style = {

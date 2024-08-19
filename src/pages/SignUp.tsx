@@ -7,6 +7,8 @@ import { FaLock, FaUser } from "react-icons/fa";
 
 import { MdEmail } from "react-icons/md";
 import { ColorContext } from "../context/ColorContext";
+import { UserService } from "../services/UserServices";
+import { User } from "../models/User";
 
 interface ISignUp {
   onRegister: (data: any) => void;
@@ -21,24 +23,32 @@ const SignUp: React.FC = () => {
     formState: { errors },
   } = useForm();
 
+  // const onSubmit = (data: any) => {
+  //   const email = data.email;
+  //   const storedData = localStorage.getItem(email);
+  //   if (!storedData) {
+  //     localStorage.setItem(
+  //       data.email,
+  //       JSON.stringify({
+  //         name: data.name,
+  //         password: data.password,
+  //       })
+  //     );
+  //     console.log(data.name);
+  //     navigate("/login");
+  //     toast.success("Kayıt olundu");
+  //   } else {
+  //     console.log("Bu kullanıcı  kayıtlı");
+  //     toast.error("Bu kullanıcı zaten kayıtlı");
+  //   }
+  // };
+
   const onSubmit = (data: any) => {
-    const email = data.email;
-    const storedData = localStorage.getItem(email);
-    if (!storedData) {
-      localStorage.setItem(
-        data.email,
-        JSON.stringify({
-          name: data.name,
-          password: data.password,
-        })
-      );
-      console.log(data.name);
-      navigate("/login");
-      toast.success("Kayıt olundu");
-    } else {
-      console.log("Bu kullanıcı  kayıtlı");
-      toast.error("Bu kullanıcı zaten kayıtlı");
-    }
+    console.log(data);
+
+    let userService = new UserService();
+
+    userService.addUser(data);
   };
 
   const style = {
@@ -88,7 +98,7 @@ const SignUp: React.FC = () => {
                     type="password"
                     className="login__input"
                     placeholder="Password"
-                    {...register("password")}
+                    {...register("password", { required: true })}
                   />
                 </div>
                 <input type={"submit"} className="login__submit" />

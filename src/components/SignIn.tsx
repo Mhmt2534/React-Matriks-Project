@@ -12,8 +12,10 @@ const SignIn = () => {
 
   useEffect(() => {
     const userData: User | any = localStorage.getItem("isSign");
+    console.log(userData);
+
     const user = JSON.parse(userData);
-    setUserName(user.name);
+    setUserName(user);
   });
 
   const handleSignOut = () => {
